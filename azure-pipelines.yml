@@ -28,7 +28,10 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-- task: VSTest@2
+- task: AzureRmWebAppDeployment@4
   inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Visual Studio Enterprise (701e5e66-c22f-4071-b94a-d79e2f0a0acc)'
+    appType: 'apiApp'
+    WebAppName: 'staff-hub-api'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
