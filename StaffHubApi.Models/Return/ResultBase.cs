@@ -11,6 +11,9 @@ namespace StaffHubApi.Models.Return
         [JsonProperty("item")]
         public T Item { get; set; }
 
+        [JsonProperty("message")]
+        public string Message { get; set; }
+
         [JsonProperty("isSuccess")]
         public bool IsSuccess { get; set; } = true;
 

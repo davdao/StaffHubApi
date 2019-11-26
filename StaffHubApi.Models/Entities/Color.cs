@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace StaffHubApi.Repositories.Entities
+namespace StaffHubApi.Models.Entities
 {
     public class Color : EntityWithId
     {

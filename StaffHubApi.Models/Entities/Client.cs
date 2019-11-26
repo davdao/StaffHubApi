@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace StaffHubApi.Repositories.Entities
+namespace StaffHubApi.Models.Entities
 {
     public class Client : EntityWithId
     {

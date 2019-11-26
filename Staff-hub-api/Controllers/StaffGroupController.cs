@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StaffHubApi.Models;
+using StaffHubApi.Models.Entities;
+using StaffHubApi.Repositories.Contract;
 
 namespace StaffHubApi.Controllers
 {
@@ -12,11 +14,19 @@ namespace StaffHubApi.Controllers
     [ApiController]
     public class StaffGroupController : ControllerBase
     {
+        private readonly IActivityService _activityService;
+
+        public StaffGroupController(IActivityService activityService)
+        {
+            _activityService = activityService;
+        }
+
         // GET: api/StaffGroup
         [HttpGet]
-        public IEnumerable<StaffGroup> Get()
+        public async Task<Activity> GetAsync()
         {
-            return Services.StaffGroupService.getStaffGroups();
+            return null;
+        //    return await _activityService.GetActivityById(1);
         }
 
         // GET: api/StaffGroup/5
@@ -50,5 +60,6 @@ namespace StaffHubApi.Controllers
         public void Delete(int id)
         {
         }
+
     }
 }
