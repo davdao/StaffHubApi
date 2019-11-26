@@ -1,10 +1,10 @@
-﻿using Staff_hub_api.Models;
+﻿using StaffHubApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Staff_hub_api.Services
+namespace StaffHubApi.Services
 {
     public static class StaffGroupService
     {

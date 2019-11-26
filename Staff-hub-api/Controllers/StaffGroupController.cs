@@ -4,9 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Staff_hub_api.Models;
+using StaffHubApi.Models;
 
-namespace Staff_hub_api.Controllers
+namespace StaffHubApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

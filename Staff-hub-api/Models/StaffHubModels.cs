@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Staff_hub_api.Models
+namespace StaffHubApi.Models
 {
     public class MemberShift
     {

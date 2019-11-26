@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Staff_hub_api": {
+    "StaffHubApi": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "weatherforecast",
