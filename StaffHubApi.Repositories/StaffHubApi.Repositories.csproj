@@ -13,7 +13,10 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
-    <Folder Include="Repositories\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\StaffHubApi.Models\StaffHubApi.Models.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using StaffHubApi.Repositories.Entities;
+using StaffHubApi.Models.Entities;
 
 namespace StaffHubApi.Repositories
 {
@@ -7,7 +7,6 @@ namespace StaffHubApi.Repositories
     {
         public StaffHubContext(DbContextOptions<StaffHubContext> options): base(options)
         {
-            Database.Migrate();
         }
 
         public DbSet<Activity> Activity { get; set; }
