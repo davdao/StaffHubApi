@@ -8,6 +8,7 @@ using StaffHubApi.Repositories;
 using StaffHubApi.Repositories.Contract;
 using StaffHubApi.Services;
 using StaffHubApi.Repositories.Implementation;
+using StaffHubApi.Models.Entities;
 
 namespace StaffHubApi
 {
@@ -23,12 +24,14 @@ namespace StaffHubApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddLocalization(options => options.ResourcesPath = "App_GlobalResources");
             services.AddControllers();
             services.AddDbContext<StaffHubContext>(op => op.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddScoped<IActivityRepository, ActivityRepository>();
-            services.AddScoped<IActivityService, ActivityService>();
+            services.AddScoped<ICommonRepository<Activity>, ActivityRepository>();
+            services.AddScoped<ICommonRepository<Client>, ClientRepository>();
+
+            services.AddScoped<ICommonService<Activity>, ActivityService>();
+            services.AddScoped<ICommonService<Client>, ClientService>();
             services.AddMvc();            
         }
 

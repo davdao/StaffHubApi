@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace StaffHubApi.Services
 {
-    public class ActivityService : IActivityService
+    public class ActivityService : ICommonService<Activity>
     {
-        private readonly IActivityRepository _activityRepository;
+        private readonly ICommonRepository<Activity> _activityRepository;
 
-        public ActivityService(IActivityRepository activityRepository)
+        public ActivityService(ICommonRepository<Activity> activityRepository)
         {
             _activityRepository = activityRepository;
         }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using StaffHubApi.Models.Entities;
 using StaffHubApi.Models.Return;
@@ -13,23 +12,23 @@ namespace StaffHubApi.Controllers
     [ApiController]
     public class ActivityController : ControllerBase
     {
-        private readonly IActivityService _activityService;
+        private readonly ICommonService<Activity> _activityService;
 
-        public ActivityController(IActivityService activityService)
+        public ActivityController(ICommonService<Activity> activityService)
         {
             _activityService = activityService;
         }
 
-        // GET: api/activity
+        // GET : api/activity
         [Route("")]
         [HttpGet]
-        public async Task<IEnumerable<Activity>> Get()
+        public IEnumerable<Activity> Get()
         {
             IEnumerable<Activity> listActivities = _activityService.Get();
             return listActivities;
         }
 
-        // POST: api/activity
+        // POST : api/activity
         [Route("")]
         [HttpPost]
         public ResultBase<Activity> Update([FromBody]Activity item)
@@ -50,13 +49,13 @@ namespace StaffHubApi.Controllers
                 catch (Exception ex)
                 {
                     res.IsSuccess = false;
-                    res.Error = new Error() { Message = Resources.ServerError + " : " + ex.Message};
+                    res.Error = new Error() { Message = Resources.ServerError + " : " + ex.Message, Stack = ex.StackTrace };
                 }
             }
             return res;
         }
 
-        // POST: api/activity
+        // DELETE : api/activity
         [Route("")]
         [HttpDelete]
         public ResultBase<Activity> Delete([FromBody]Activity item)
@@ -78,7 +77,7 @@ namespace StaffHubApi.Controllers
                 catch (Exception ex)
                 {
                     res.IsSuccess = false;
-                    res.Error = new Error() { Message = Resources.ServerError + " : " + ex.Message };
+                    res.Error = new Error() { Message = Resources.ServerError + " : " + ex.Message, Stack = ex.StackTrace };
                 }
             }
             return res;
