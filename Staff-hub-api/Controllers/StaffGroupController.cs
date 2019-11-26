@@ -14,9 +14,9 @@ namespace StaffHubApi.Controllers
     [ApiController]
     public class StaffGroupController : ControllerBase
     {
-        private readonly IActivityService _activityService;
+        private readonly ICommonService<Activity> _activityService;
 
-        public StaffGroupController(IActivityService activityService)
+        public StaffGroupController(ICommonService<Activity> activityService)
         {
             _activityService = activityService;
         }
