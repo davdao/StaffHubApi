@@ -4,7 +4,7 @@ using StaffHubApi.Repositories.Contract;
 
 namespace StaffHubApi.Services
 {
-    class ShiftService : ICommonService<Shift>
+    public class ShiftService : ICommonService<Shift>
     {
         private readonly ICommonRepository<Shift> _shiftRepository;
 

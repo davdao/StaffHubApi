@@ -4,7 +4,7 @@ using StaffHubApi.Repositories.Contract;
 
 namespace StaffHubApi.Services
 {
-    class MemberService : ICommonService<Member>
+    public class MemberService : ICommonService<Member>
     {
         private readonly ICommonRepository<Member> _memberRepository;
 

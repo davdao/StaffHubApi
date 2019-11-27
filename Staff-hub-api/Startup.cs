@@ -29,9 +29,13 @@ namespace StaffHubApi
 
             services.AddScoped<ICommonRepository<Activity>, ActivityRepository>();
             services.AddScoped<ICommonRepository<Client>, ClientRepository>();
+            services.AddScoped<ICommonRepository<Member>, MemberRepository>();
+            services.AddScoped<ICommonRepository<Shift>, ShiftRepository>();
 
             services.AddScoped<ICommonService<Activity>, ActivityService>();
             services.AddScoped<ICommonService<Client>, ClientService>();
+            services.AddScoped<ICommonService<Member>, MemberService>();
+            services.AddScoped<ICommonService<Shift>, ShiftService>();
             services.AddMvc();            
         }
 
