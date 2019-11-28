@@ -23,6 +23,11 @@ namespace StaffHubApi.Services
             return _memberRepository.All;
         }
 
+        public Member GetById(int itemID)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public Member Post(Member item)
         {
             _memberRepository.Insert(item);

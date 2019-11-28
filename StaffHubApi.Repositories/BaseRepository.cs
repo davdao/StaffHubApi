@@ -15,21 +15,15 @@ namespace StaffHubApi.Repositories
 
         public BaseRepository(StaffHubContext context)
         {
-            this._context = context;
+            this._context = context;            
         }
 
         public IQueryable<TEntity> All => _context.Set<TEntity>().AsQueryable();
 
         private DbSet<TEntity> DbSet => _context.Set<TEntity>();
 
-        public TEntity Find(params object[] keyValues)
-        {
-            return DbSet.Find(keyValues);
-        }
-
         public TEntity Insert(TEntity entity)
         {
-            //entity.Id = Guid.NewGuid();
             DbSet.Add(entity);
             return entity;
         }

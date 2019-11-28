@@ -23,6 +23,11 @@ namespace StaffHubApi.Services
             return _clientRepository.All;
         }
 
+        public Client GetById(int itemID)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public Client Post(Client item)
         {
             _clientRepository.Insert(item);

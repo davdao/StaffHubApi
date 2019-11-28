@@ -23,6 +23,11 @@ namespace StaffHubApi.Services
             return _shiftRepository.All;
         }
 
+        public Shift GetById(int itemID)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public Shift Post(Shift item)
         {
             _shiftRepository.Insert(item);

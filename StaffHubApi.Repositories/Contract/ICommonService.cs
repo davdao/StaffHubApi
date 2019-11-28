@@ -8,6 +8,8 @@ namespace StaffHubApi.Repositories.Contract
     {
         IEnumerable<T> Get();
 
+        T GetById(int itemID);
+
         T Post(T item);
 
         T Update(T item);
