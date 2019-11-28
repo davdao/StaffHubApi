@@ -1,13 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using StaffHubApi.Models.Entities;
 using StaffHubApi.Models.Return;
 using StaffHubApi.Repositories.Contract;
 using StaffHubApi.Utils;
+using Microsoft.AspNetCore.Cors;
 
 namespace StaffHubApi.Controllers
 {
+    [EnableCors("StaffHub")]
     [Route("api/activity")]
     [ApiController]
     public class ActivityController : ControllerBase
@@ -22,10 +23,21 @@ namespace StaffHubApi.Controllers
         // GET : api/activity
         [Route("")]
         [HttpGet]
-        public IEnumerable<Activity> Get()
+        public ResultBase<Activity> Get(int id)
         {
-            IEnumerable<Activity> listActivities = _activityService.Get();
-            return listActivities;
+            ResultBase<Activity> res = new ResultBase<Activity>();
+
+            try
+            {
+                res.Item = _activityService.GetById(id);
+            }
+            catch (Exception ex)
+            {
+                res.IsSuccess = false;
+                res.Error = new Error() { Message = Resources.ServerError + " : " + ex.Message, Stack = ex.StackTrace };
+            }
+
+            return res;
         }
 
         // POST : api/activity

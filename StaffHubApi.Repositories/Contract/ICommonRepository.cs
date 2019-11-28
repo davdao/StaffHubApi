@@ -9,8 +9,6 @@ namespace StaffHubApi.Repositories.Contract
     {
         IQueryable<T> All { get; }
 
-        T Find(params object[] keyValues);
-
         int Delete(T item);
 
         T Insert(T item);

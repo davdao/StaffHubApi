@@ -25,12 +25,19 @@ namespace StaffHubApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddCors(o => o.AddPolicy("StaffHub", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
+            
             services.AddDbContext<StaffHubContext>(op => op.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddScoped<ICommonRepository<Activity>, ActivityRepository>();
+            services.AddScoped<IActivityRepository, ActivityRepository>();
             services.AddScoped<ICommonRepository<Client>, ClientRepository>();
             services.AddScoped<ICommonRepository<Member>, MemberRepository>();
-            services.AddScoped<ICommonRepository<Shift>, ShiftRepository>();
+            services.AddScoped<ICommonRepository<Shift>, ShiftRepository>();            
 
             services.AddScoped<ICommonService<Activity>, ActivityService>();
             services.AddScoped<ICommonService<Client>, ClientService>();
@@ -47,15 +54,15 @@ namespace StaffHubApi
                 app.UseDeveloperExceptionPage();
             }
 
+            
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseCors();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
-                //endpoints.MapControllerRoute("default", "{controller=StaffGroup}/{action=Index}/{id?}");
                 endpoints.MapControllers();
             });
         }
