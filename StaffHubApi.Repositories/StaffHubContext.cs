@@ -13,19 +13,19 @@ namespace StaffHubApi.Repositories
         public DbSet<Activity> Activity { get; set; }
         public DbSet<Member> Member { get; set; }
         public DbSet<Shift> Shift { get; set; }
-        public DbSet<Color> Color { get; set; }
         public DbSet<Client> Client { get; set; }
         public DbSet<ActivitiesRelationship> ActivitiesRelationship { get; set; }
-
+        public DbSet<ActivityMemberRelationship> ActivityMemberRelationship { get; set; }
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Member>().ToTable("Member");
             modelBuilder.Entity<Activity>().ToTable("Activity");
             modelBuilder.Entity<Shift>().ToTable("Shift");
-            modelBuilder.Entity<Color>().ToTable("Color");
             modelBuilder.Entity<Client>().ToTable("Client");
             modelBuilder.Entity<ActivitiesRelationship>().ToTable("ActivitiesRelationship");
-
+            modelBuilder.Entity<ActivityMemberRelationship>().ToTable("ActivityMemberRelationship");
+            
             modelBuilder.Entity<Activity>().HasData(new Activity { Id = 1, Name = "Modern Workplace" });
             modelBuilder.Entity<Activity>().HasData(new Activity { Id = 2, Name = "Cloud Apps Data" });
 
@@ -40,43 +40,34 @@ namespace StaffHubApi.Repositories
                 new { Id = 8, Name = "Le Carpentier Antoine", Email = "lecarpentier@infeeny.com", PictureUrl = ""},
                 new { Id = 9, Name = "Florez Angela", Email = "florez@infeeny.com", PictureUrl = ""}
                 );
-            modelBuilder.Entity<Color>().HasData(
-                new Color { Id = 1, Name = "Infeeny", ColorCode = "#240058" },
-                new Color { Id = 2, Name = "Bleu", ColorCode = "#017CE6" },
-                new Color { Id = 3, Name = "Vert", ColorCode = "#8EBB0E" },
-                new Color { Id = 4, Name = "Violet", ColorCode = "#8D7EF3" },
-                new Color { Id = 5, Name = "Rose", ColorCode = "#E15E6F" },
-                new Color { Id = 6, Name = "Jaune", ColorCode = "#FFBA00" },
-                new Color { Id = 7, Name = "Gris", ColorCode = "#454644" },
-                new Color { Id = 8, Name = "Bleu foncé", ColorCode = "#005295" },
-                new Color { Id = 9, Name = "Vert foncé", ColorCode = "#4D8602" },
-                new Color { Id = 10, Name = "Violet foncé", ColorCode = "#562888" },
-                new Color { Id = 11, Name = "Rose foncé", ColorCode = "#A4202B" },
-                new Color { Id = 12, Name = "Jaune foncé", ColorCode = "#FFA230" });
 
             modelBuilder.Entity<Client>().HasData(
-                new { Id = 1, Name = "GEM", ColorId = 1 },
-                new { Id = 2, Name = "Michelin", ColorId = 2 },
-                new { Id = 3, Name = "Sicam", ColorId = 5 },
-                new { Id = 4, Name = "Cegid", ColorId = 6 }
+                new { Id = 1, Name = "GEM", Color = "#8D7EF3" },
+                new { Id = 2, Name = "Michelin", Color = "#A4202B" },
+                new { Id = 3, Name = "Sicam", Color = "#4D8602" },
+                new { Id = 4, Name = "Cegid", Color = "#454644" }
+                );
+
+            modelBuilder.Entity<ActivityMemberRelationship>().HasData(
+                    new ActivityMemberRelationship { Id = 1, ActivityId = 1, MemberId = 1 },
+                    new ActivityMemberRelationship { Id = 2, ActivityId = 1, MemberId = 2 },
+                    new ActivityMemberRelationship { Id = 3, ActivityId = 1, MemberId = 3 },
+                    new ActivityMemberRelationship { Id = 4, ActivityId = 1, MemberId = 4 },
+                    new ActivityMemberRelationship { Id = 5, ActivityId = 1, MemberId = 5 },
+                    new ActivityMemberRelationship { Id = 6, ActivityId = 1, MemberId = 6 },
+                    new ActivityMemberRelationship { Id = 7, ActivityId = 1, MemberId = 7 },
+                    new ActivityMemberRelationship { Id = 8, ActivityId = 1, MemberId = 8 },
+                    new ActivityMemberRelationship { Id = 9, ActivityId = 1, MemberId = 9 }
+                );
+
+            modelBuilder.Entity<Shift>().HasData(
+                new Shift { Id = 1, StartDate = new System.DateTime(2019, 11, 25), EndDate = new System.DateTime(2019, 11, 28), Title = "bonjour" }
                 );
 
             modelBuilder.Entity<ActivitiesRelationship>().HasData(
-                    new ActivitiesRelationship { Id = 1, ActivityId = 1, MemberId = 1 },
-                    new ActivitiesRelationship { Id = 2, ActivityId = 1, MemberId = 2 },
-                    new ActivitiesRelationship { Id = 3, ActivityId = 1, MemberId = 3 },
-                    new ActivitiesRelationship { Id = 4, ActivityId = 1, MemberId = 4 },
-                    new ActivitiesRelationship { Id = 5, ActivityId = 1, MemberId = 5 },
-                    new ActivitiesRelationship { Id = 6, ActivityId = 1, MemberId = 6 },
-                    new ActivitiesRelationship { Id = 7, ActivityId = 1, MemberId = 7 },
-                    new ActivitiesRelationship { Id = 8, ActivityId = 1, MemberId = 8 },
-                    new ActivitiesRelationship { Id = 9, ActivityId = 1, MemberId = 9 },
-                    new ActivitiesRelationship { Id = 10, ActivityId = 2, MemberId = 1 },
-                    new ActivitiesRelationship { Id = 11, ActivityId = 2, MemberId = 2 },
-                    new ActivitiesRelationship { Id = 12, ActivityId = 2, MemberId = 3 },
-                    new ActivitiesRelationship { Id = 13, ActivityId = 2, MemberId = 4 },
-                    new ActivitiesRelationship { Id = 14, ActivityId = 2, MemberId = 5 }
+                new ActivitiesRelationship { Id = 1, ActivityId = 1, ClientId = 1, MemberId = 5, ShiftId = 1 }
                 );
+
             base.OnModelCreating(modelBuilder);
         }
     }

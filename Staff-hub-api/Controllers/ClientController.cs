@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using StaffHubApi.Models.Entities;
 using StaffHubApi.Models.Return;
@@ -8,6 +9,7 @@ using StaffHubApi.Utils;
 
 namespace StaffHubApi.Controllers
 {
+    [EnableCors("StaffHub")]
     [Route("api/client")]
     [ApiController]
     public class ClientController : ControllerBase
@@ -22,9 +24,21 @@ namespace StaffHubApi.Controllers
         // GET: api/client
         [Route("")]
         [HttpGet]
-        public IEnumerable<Client> Get()
+        public ResultBase<Client> Get()
         {
-            return _clientService.Get();
+            ResultBase<Client> res = new ResultBase<Client>();
+
+            try
+            {
+                res.Data = _clientService.Get();
+            }
+            catch (Exception ex)
+            {
+                res.IsSuccess = false;
+                res.Error = new Error() { Message = Resources.ServerError + " : " + ex.Message, Stack = ex.StackTrace };
+            }
+
+            return res;
         }
 
         // POST : api/client

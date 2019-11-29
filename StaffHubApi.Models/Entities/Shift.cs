@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace StaffHubApi.Models.Entities
@@ -12,6 +13,7 @@ namespace StaffHubApi.Models.Entities
 
         public DateTime EndDate { get; set; }
 
+        [NotMapped]
         public Client Client { get; set; }
     }
 }

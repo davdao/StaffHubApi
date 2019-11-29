@@ -26,7 +26,34 @@ namespace StaffHubApi.Controllers
         }
 
         // POST : api/client
-        [Route("")]
+        [Route("add")]
+        [HttpPost]
+        public ResultBase<Shift> Add([FromBody]Shift item)
+        {
+            ResultBase<Shift> res = new ResultBase<Shift>();
+
+            if (!ModelState.IsValid)
+            {
+                res.IsSuccess = false;
+                res.Error = new Error() { Message = Resources.ModelInvalid };
+            }
+            else
+            {
+                try
+                {
+                    res.Item = _shiftService.Post(item);
+                }
+                catch (Exception ex)
+                {
+                    res.IsSuccess = false;
+                    res.Error = new Error() { Message = Resources.ServerError + " : " + ex.Message, Stack = ex.StackTrace };
+                }
+            }
+            return res;
+        }
+
+        // POST : api/client
+        [Route("update")]
         [HttpPost]
         public ResultBase<Shift> Update([FromBody]Shift item)
         {
