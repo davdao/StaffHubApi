@@ -58,15 +58,13 @@ namespace StaffHubApi.Repositories.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("ColorId")
-                        .HasColumnType("int");
+                    b.Property<string>("Color")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ColorId");
 
                     b.ToTable("Client");
 
@@ -74,118 +72,26 @@ namespace StaffHubApi.Repositories.Migrations
                         new
                         {
                             Id = 1,
-                            ColorId = 1,
+                            Color = "#8D7EF3",
                             Name = "GEM"
                         },
                         new
                         {
                             Id = 2,
-                            ColorId = 2,
+                            Color = "#A4202B",
                             Name = "Michelin"
                         },
                         new
                         {
                             Id = 3,
-                            ColorId = 5,
+                            Color = "#4D8602",
                             Name = "Sicam"
                         },
                         new
                         {
                             Id = 4,
-                            ColorId = 6,
+                            Color = "#454644",
                             Name = "Cegid"
-                        });
-                });
-
-            modelBuilder.Entity("StaffHubApi.Models.Entities.Color", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ColorCode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Color");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            ColorCode = "#240058",
-                            Name = "Infeeny"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            ColorCode = "#017CE6",
-                            Name = "Bleu"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            ColorCode = "#8EBB0E",
-                            Name = "Vert"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            ColorCode = "#8D7EF3",
-                            Name = "Violet"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            ColorCode = "#E15E6F",
-                            Name = "Rose"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            ColorCode = "#FFBA00",
-                            Name = "Jaune"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            ColorCode = "#454644",
-                            Name = "Gris"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            ColorCode = "#005295",
-                            Name = "Bleu foncé"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            ColorCode = "#4D8602",
-                            Name = "Vert foncé"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            ColorCode = "#562888",
-                            Name = "Violet foncé"
-                        },
-                        new
-                        {
-                            Id = 11,
-                            ColorCode = "#A4202B",
-                            Name = "Rose foncé"
-                        },
-                        new
-                        {
-                            Id = 12,
-                            ColorCode = "#FFA230",
-                            Name = "Jaune foncé"
                         });
                 });
 
@@ -282,9 +188,6 @@ namespace StaffHubApi.Repositories.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("ClientId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
@@ -296,9 +199,16 @@ namespace StaffHubApi.Repositories.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClientId");
-
                     b.ToTable("Shift");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            EndDate = new DateTime(2019, 11, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            StartDate = new DateTime(2019, 11, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Title = "bonjour"
+                        });
                 });
 
             modelBuilder.Entity("StaffHubApi.Models.Relationship.ActivitiesRelationship", b =>
@@ -311,6 +221,9 @@ namespace StaffHubApi.Repositories.Migrations
                     b.Property<int>("ActivityId")
                         .HasColumnType("int");
 
+                    b.Property<int>("ClientId")
+                        .HasColumnType("int");
+
                     b.Property<int>("MemberId")
                         .HasColumnType("int");
 
@@ -321,11 +234,44 @@ namespace StaffHubApi.Repositories.Migrations
 
                     b.HasIndex("ActivityId");
 
+                    b.HasIndex("ClientId");
+
                     b.HasIndex("MemberId");
 
                     b.HasIndex("ShiftId");
 
                     b.ToTable("ActivitiesRelationship");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ActivityId = 1,
+                            ClientId = 1,
+                            MemberId = 5
+                        });
+                });
+
+            modelBuilder.Entity("StaffHubApi.Models.Relationship.ActivityMemberRelationship", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ActivityId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MemberId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ActivityId");
+
+                    b.HasIndex("MemberId");
+
+                    b.ToTable("ActivityMemberRelationship");
 
                     b.HasData(
                         new
@@ -381,73 +327,7 @@ namespace StaffHubApi.Repositories.Migrations
                             Id = 9,
                             ActivityId = 1,
                             MemberId = 9
-                        },
-                        new
-                        {
-                            Id = 10,
-                            ActivityId = 2,
-                            MemberId = 1
-                        },
-                        new
-                        {
-                            Id = 11,
-                            ActivityId = 2,
-                            MemberId = 2
-                        },
-                        new
-                        {
-                            Id = 12,
-                            ActivityId = 2,
-                            MemberId = 3
-                        },
-                        new
-                        {
-                            Id = 13,
-                            ActivityId = 2,
-                            MemberId = 4
-                        },
-                        new
-                        {
-                            Id = 14,
-                            ActivityId = 2,
-                            MemberId = 5
                         });
-                });
-
-            modelBuilder.Entity("StaffHubApi.Models.Relationship.ActivityMember", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ActivityId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MemberId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ActivityId");
-
-                    b.HasIndex("MemberId");
-
-                    b.ToTable("ActivityMember");
-                });
-
-            modelBuilder.Entity("StaffHubApi.Models.Entities.Client", b =>
-                {
-                    b.HasOne("StaffHubApi.Models.Entities.Color", "Color")
-                        .WithMany()
-                        .HasForeignKey("ColorId");
-                });
-
-            modelBuilder.Entity("StaffHubApi.Models.Entities.Shift", b =>
-                {
-                    b.HasOne("StaffHubApi.Models.Entities.Client", "Client")
-                        .WithMany()
-                        .HasForeignKey("ClientId");
                 });
 
             modelBuilder.Entity("StaffHubApi.Models.Relationship.ActivitiesRelationship", b =>
@@ -455,6 +335,12 @@ namespace StaffHubApi.Repositories.Migrations
                     b.HasOne("StaffHubApi.Models.Entities.Activity", "Activity")
                         .WithMany()
                         .HasForeignKey("ActivityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("StaffHubApi.Models.Entities.Client", "Client")
+                        .WithMany()
+                        .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -469,7 +355,7 @@ namespace StaffHubApi.Repositories.Migrations
                         .HasForeignKey("ShiftId");
                 });
 
-            modelBuilder.Entity("StaffHubApi.Models.Relationship.ActivityMember", b =>
+            modelBuilder.Entity("StaffHubApi.Models.Relationship.ActivityMemberRelationship", b =>
                 {
                     b.HasOne("StaffHubApi.Models.Entities.Activity", "Activity")
                         .WithMany()

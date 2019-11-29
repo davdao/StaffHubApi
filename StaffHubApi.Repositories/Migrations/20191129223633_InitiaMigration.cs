@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace StaffHubApi.Repositories.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class InitiaMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -22,17 +22,17 @@ namespace StaffHubApi.Repositories.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Color",
+                name: "Client",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: true),
-                    ColorCode = table.Column<string>(nullable: true)
+                    Color = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Color", x => x.Id);
+                    table.PrimaryKey("PK_Client", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -51,27 +51,22 @@ namespace StaffHubApi.Repositories.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Client",
+                name: "Shift",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
-                    ColorId = table.Column<int>(nullable: true)
+                    Title = table.Column<string>(nullable: true),
+                    StartDate = table.Column<DateTime>(nullable: false),
+                    EndDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Client", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Client_Color_ColorId",
-                        column: x => x.ColorId,
-                        principalTable: "Color",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                    table.PrimaryKey("PK_Shift", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ActivityMember",
+                name: "ActivityMemberRelationship",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -81,41 +76,19 @@ namespace StaffHubApi.Repositories.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ActivityMember", x => x.Id);
+                    table.PrimaryKey("PK_ActivityMemberRelationship", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ActivityMember_Activity_ActivityId",
+                        name: "FK_ActivityMemberRelationship_Activity_ActivityId",
                         column: x => x.ActivityId,
                         principalTable: "Activity",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ActivityMember_Member_MemberId",
+                        name: "FK_ActivityMemberRelationship_Member_MemberId",
                         column: x => x.MemberId,
                         principalTable: "Member",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Shift",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(nullable: true),
-                    StartDate = table.Column<DateTime>(nullable: false),
-                    EndDate = table.Column<DateTime>(nullable: false),
-                    ClientId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Shift", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Shift_Client_ClientId",
-                        column: x => x.ClientId,
-                        principalTable: "Client",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -126,7 +99,8 @@ namespace StaffHubApi.Repositories.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ActivityId = table.Column<int>(nullable: false),
                     MemberId = table.Column<int>(nullable: false),
-                    ShiftId = table.Column<int>(nullable: true)
+                    ShiftId = table.Column<int>(nullable: true),
+                    ClientId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -135,6 +109,12 @@ namespace StaffHubApi.Repositories.Migrations
                         name: "FK_ActivitiesRelationship_Activity_ActivityId",
                         column: x => x.ActivityId,
                         principalTable: "Activity",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ActivitiesRelationship_Client_ClientId",
+                        column: x => x.ClientId,
+                        principalTable: "Client",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -161,22 +141,14 @@ namespace StaffHubApi.Repositories.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Color",
-                columns: new[] { "Id", "ColorCode", "Name" },
+                table: "Client",
+                columns: new[] { "Id", "Color", "Name" },
                 values: new object[,]
                 {
-                    { 12, "#FFA230", "Jaune foncé" },
-                    { 11, "#A4202B", "Rose foncé" },
-                    { 9, "#4D8602", "Vert foncé" },
-                    { 8, "#005295", "Bleu foncé" },
-                    { 7, "#454644", "Gris" },
-                    { 10, "#562888", "Violet foncé" },
-                    { 5, "#E15E6F", "Rose" },
-                    { 4, "#8D7EF3", "Violet" },
-                    { 3, "#8EBB0E", "Vert" },
-                    { 2, "#017CE6", "Bleu" },
-                    { 1, "#240058", "Infeeny" },
-                    { 6, "#FFBA00", "Jaune" }
+                    { 1, "#8D7EF3", "GEM" },
+                    { 2, "#A4202B", "Michelin" },
+                    { 3, "#4D8602", "Sicam" },
+                    { 4, "#454644", "Cegid" }
                 });
 
             migrationBuilder.InsertData(
@@ -184,7 +156,6 @@ namespace StaffHubApi.Repositories.Migrations
                 columns: new[] { "Id", "Email", "Name", "PictureUrl" },
                 values: new object[,]
                 {
-                    { 8, "lecarpentier@infeeny.com", "Le Carpentier Antoine", "" },
                     { 1, "console@infeeny.com", "Pauline Console", "" },
                     { 2, "muroni@infeeny.com", "Muroni Brice", "" },
                     { 3, "dao@infeeny.com", "Dao David", "" },
@@ -192,45 +163,45 @@ namespace StaffHubApi.Repositories.Migrations
                     { 5, "fruhinsholz@infeeny.com", "Fruhinsholz Fiona", "" },
                     { 6, "grange@infeeny.com", "Grange Sylvain", "" },
                     { 7, "fernandez@infeeny.com", "Fernandez Gaelle", "" },
+                    { 8, "lecarpentier@infeeny.com", "Le Carpentier Antoine", "" },
                     { 9, "florez@infeeny.com", "Florez Angela", "" }
                 });
 
             migrationBuilder.InsertData(
-                table: "ActivitiesRelationship",
-                columns: new[] { "Id", "ActivityId", "MemberId", "ShiftId" },
-                values: new object[,]
-                {
-                    { 3, 1, 3, null },
-                    { 7, 1, 7, null },
-                    { 6, 1, 6, null },
-                    { 14, 2, 5, null },
-                    { 5, 1, 5, null },
-                    { 13, 2, 4, null },
-                    { 4, 1, 4, null },
-                    { 12, 2, 3, null },
-                    { 9, 1, 9, null },
-                    { 11, 2, 2, null },
-                    { 2, 1, 2, null },
-                    { 10, 2, 1, null },
-                    { 1, 1, 1, null },
-                    { 8, 1, 8, null }
-                });
+                table: "Shift",
+                columns: new[] { "Id", "EndDate", "StartDate", "Title" },
+                values: new object[] { 1, new DateTime(2019, 11, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2019, 11, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), "bonjour" });
 
             migrationBuilder.InsertData(
-                table: "Client",
-                columns: new[] { "Id", "ColorId", "Name" },
+                table: "ActivitiesRelationship",
+                columns: new[] { "Id", "ActivityId", "ClientId", "MemberId", "ShiftId" },
+                values: new object[] { 1, 1, 1, 5, null });
+
+            migrationBuilder.InsertData(
+                table: "ActivityMemberRelationship",
+                columns: new[] { "Id", "ActivityId", "MemberId" },
                 values: new object[,]
                 {
-                    { 4, 6, "Cegid" },
-                    { 3, 5, "Sicam" },
-                    { 2, 2, "Michelin" },
-                    { 1, 1, "GEM" }
+                    { 1, 1, 1 },
+                    { 2, 1, 2 },
+                    { 3, 1, 3 },
+                    { 4, 1, 4 },
+                    { 5, 1, 5 },
+                    { 6, 1, 6 },
+                    { 7, 1, 7 },
+                    { 8, 1, 8 },
+                    { 9, 1, 9 }
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ActivitiesRelationship_ActivityId",
                 table: "ActivitiesRelationship",
                 column: "ActivityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ActivitiesRelationship_ClientId",
+                table: "ActivitiesRelationship",
+                column: "ClientId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ActivitiesRelationship_MemberId",
@@ -243,24 +214,14 @@ namespace StaffHubApi.Repositories.Migrations
                 column: "ShiftId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ActivityMember_ActivityId",
-                table: "ActivityMember",
+                name: "IX_ActivityMemberRelationship_ActivityId",
+                table: "ActivityMemberRelationship",
                 column: "ActivityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ActivityMember_MemberId",
-                table: "ActivityMember",
+                name: "IX_ActivityMemberRelationship_MemberId",
+                table: "ActivityMemberRelationship",
                 column: "MemberId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Client_ColorId",
-                table: "Client",
-                column: "ColorId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Shift_ClientId",
-                table: "Shift",
-                column: "ClientId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -269,7 +230,10 @@ namespace StaffHubApi.Repositories.Migrations
                 name: "ActivitiesRelationship");
 
             migrationBuilder.DropTable(
-                name: "ActivityMember");
+                name: "ActivityMemberRelationship");
+
+            migrationBuilder.DropTable(
+                name: "Client");
 
             migrationBuilder.DropTable(
                 name: "Shift");
@@ -279,12 +243,6 @@ namespace StaffHubApi.Repositories.Migrations
 
             migrationBuilder.DropTable(
                 name: "Member");
-
-            migrationBuilder.DropTable(
-                name: "Client");
-
-            migrationBuilder.DropTable(
-                name: "Color");
         }
     }
 }

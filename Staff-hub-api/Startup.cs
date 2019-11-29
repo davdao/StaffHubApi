@@ -9,6 +9,7 @@ using StaffHubApi.Repositories.Contract;
 using StaffHubApi.Services;
 using StaffHubApi.Repositories.Implementation;
 using StaffHubApi.Models.Entities;
+using StaffHubApi.Models.Relationship;
 
 namespace StaffHubApi
 {
@@ -34,14 +35,17 @@ namespace StaffHubApi
             
             services.AddDbContext<StaffHubContext>(op => op.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddScoped<IActivityRepository, ActivityRepository>();
+            services.AddScoped<ICommonRepository<Activity>, ActivityRepository>();
             services.AddScoped<ICommonRepository<Client>, ClientRepository>();
             services.AddScoped<ICommonRepository<Member>, MemberRepository>();
-            services.AddScoped<ICommonRepository<Shift>, ShiftRepository>();            
+            services.AddScoped<ICommonRepository<Shift>, ShiftRepository>();
 
+            services.AddScoped<IActivitiesRelationshipRepository, ActivitiesRelationshipRepository>();
+            services.AddScoped<IActivtiesMemberRelationshipRepository, ActivityMemberRelationshipRepository>();
+            
             services.AddScoped<ICommonService<Activity>, ActivityService>();
             services.AddScoped<ICommonService<Client>, ClientService>();
-            services.AddScoped<ICommonService<Member>, MemberService>();
+            services.AddScoped<IMemberService, MemberService>();
             services.AddScoped<ICommonService<Shift>, ShiftService>();
             services.AddMvc();            
         }

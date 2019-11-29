@@ -9,16 +9,22 @@ namespace StaffHubApi.Services
 {
     public class ActivityService : ICommonService<Activity>
     {
-        private readonly IActivityRepository _activityRepository;
+        private readonly IActivitiesRelationshipRepository _activitiesRelationshipRepository;
+        private readonly IActivtiesMemberRelationshipRepository _activtiesMemberRelationshipRepository;
+        private readonly ICommonRepository<Activity> _activityRepository;
         private readonly ICommonRepository<Member> _memberRepository;
         private readonly ICommonRepository<Client> _clientRepository;
         private readonly ICommonRepository<Shift> _shiftRepository;
 
-        public ActivityService(IActivityRepository activityRepository,
+        public ActivityService(IActivitiesRelationshipRepository activitiesRelationshipRepository,
+                                IActivtiesMemberRelationshipRepository activtiesMemberRelationshipRepository,
+                                ICommonRepository<Activity> activityRepository,
                                 ICommonRepository<Member> memberRepository,
                                 ICommonRepository<Client> clientRepository,
                                 ICommonRepository<Shift> shiftRepository)
         {
+            _activitiesRelationshipRepository = activitiesRelationshipRepository;
+            _activtiesMemberRelationshipRepository = activtiesMemberRelationshipRepository;
             _activityRepository = activityRepository;
             _memberRepository = memberRepository;
             _clientRepository = clientRepository;
@@ -58,10 +64,11 @@ namespace StaffHubApi.Services
 
         public Activity GetById(int activityId)
         {
-            List<ActivitiesRelationship> activityList = _activityRepository.GetActivity(activityId).ToList();
+            List<ActivityMemberRelationship> membersList = _activtiesMemberRelationshipRepository.GetMembersByActivityId(activityId).ToList();
+            List<ActivitiesRelationship> shiftsList = _activitiesRelationshipRepository.GetActivityShiftsByActivityId(activityId).ToList();
             Activity activity = new Activity() { Id = 0 };
 
-            activityList.ForEach((singleItem) =>
+            membersList.ForEach((singleItem) =>
             {
                 if (activity.Id != singleItem.ActivityId)
                 {
@@ -70,12 +77,17 @@ namespace StaffHubApi.Services
                     activity.Name = singleItem.Activity.Name;
                 }
 
-                activity.Members.Add(new Member()
+                List<Shift> filteredValues = shiftsList.Where(u => u.MemberId == singleItem.MemberId).Select(i => i.Shift).ToList();
+                Member memberToAdd = new Member()
                 {
                     Id = singleItem.MemberId,
                     Name = singleItem.Member.Name,
                     Email = singleItem.Member.Email
-                });
+                };
+
+                if (filteredValues.Count > 0)
+                    memberToAdd.ShiftArray = filteredValues;
+                activity.Members.Add(memberToAdd);
             });
 
             return activity;
