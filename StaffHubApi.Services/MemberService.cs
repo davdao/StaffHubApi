@@ -21,25 +21,27 @@ namespace StaffHubApi.Services
             _activitiesRelationshipRepository = activitiesRelationshipRepository;
         }
 
-        public bool AddEventByMemberEmail(Shift itemToUpdate, string memberEmail, int activityId)
+        public Shift AddEventByMemberEmail(Shift itemToUpdate, string memberEmail, int activityId)
         {
-            bool succeeded = false;
             Member memberToLink = _memberRepository.All.Where(u => u.Email == memberEmail).FirstOrDefault();
             if (memberToLink != null)
             {
                 Shift addedShift = _shiftRepository.Insert(itemToUpdate);
                 _shiftRepository.Save();
 
-                _activitiesRelationshipRepository.Insert(new ActivitiesRelationship() { ActivityId = activityId, MemberId = memberToLink.Id, ShiftId = addedShift.Id });
+                _activitiesRelationshipRepository.Insert(new ActivitiesRelationship() { 
+                                                            ActivityId = activityId, 
+                                                            MemberId = memberToLink.Id, 
+                                                            ShiftId = addedShift.Id,
+                                                            ClientId = addedShift.Client.Id});
                 _activitiesRelationshipRepository.Save();
 
-                succeeded = true;
+                return addedShift;
             }
             else
             {
                 throw new System.Exception("User '" + memberEmail + "' not found");
             }
-            return succeeded;
         }
 
         public bool Delete(Member item)

@@ -15,5 +15,23 @@ namespace StaffHubApi.Models.Entities
 
         [NotMapped]
         public Client Client { get; set; }
+
+        [NotMapped]
+        public int startDay { get; set; }
+
+        [NotMapped]
+        public int StartMonth { get; set; }
+
+        [NotMapped]
+        public int StartYear { get; set; }
+
+        [NotMapped]
+        public int endDay { get; set; }
+
+        [NotMapped]
+        public int endMonth { get; set; }
+
+        [NotMapped]
+        public int endYear { get; set; }
     }
 }
