@@ -35,7 +35,7 @@ namespace StaffHubApi.Controllers
             catch (Exception ex)
             {
                 res.IsSuccess = false;
-                res.Error = new Error() { Message = Resources.ServerError + " : " + ex.Message, Stack = ex.StackTrace };
+                res.Error = new Error() { Message = Resources.ServerError + " : " + ex.InnerException, Stack = ex.StackTrace };
             }
 
             return res;
@@ -62,7 +62,7 @@ namespace StaffHubApi.Controllers
                 catch (Exception ex)
                 {
                     res.IsSuccess = false;
-                    res.Error = new Error() { Message = Resources.ServerError + " : " + ex.Message, Stack = ex.StackTrace };
+                    res.Error = new Error() { Message = Resources.ServerError + " : " + ex.InnerException, Stack = ex.StackTrace };
                 }
             }
             return res;
@@ -90,7 +90,7 @@ namespace StaffHubApi.Controllers
                 catch (Exception ex)
                 {
                     res.IsSuccess = false;
-                    res.Error = new Error() { Message = Resources.ServerError + " : " + ex.Message, Stack = ex.StackTrace };
+                    res.Error = new Error() { Message = Resources.ServerError + " : " + ex.InnerException, Stack = ex.StackTrace };
                 }
             }
             return res;

@@ -15,10 +15,13 @@ namespace StaffHubApi.Controllers
     public class MemberController : ControllerBase
     {
         private readonly IMemberService _memberService;
+        private readonly ICommonService<Shift> _shiftService;
 
-        public MemberController(IMemberService memberService)
+        public MemberController(IMemberService memberService,
+                                ICommonService<Shift> shiftService)
         {
             _memberService = memberService;
+            _shiftService = shiftService;
         }
 
         // GET: api/member
@@ -50,7 +53,7 @@ namespace StaffHubApi.Controllers
                 catch (Exception ex)
                 {
                     res.IsSuccess = false;
-                    res.Error = new Error() { Message = Resources.ServerError + " : " + ex.Message, Stack = ex.StackTrace };
+                    res.Error = new Error() { Message = Resources.ServerError + " : " + ex.InnerException, Stack = ex.StackTrace };
                 }
             }
             return res;
@@ -78,7 +81,7 @@ namespace StaffHubApi.Controllers
                 catch (Exception ex)
                 {
                     res.IsSuccess = false;
-                    res.Error = new Error() { Message = Resources.ServerError + " : " + ex.Message, Stack = ex.StackTrace };
+                    res.Error = new Error() { Message = Resources.ServerError + " : " + ex.InnerException, Stack = ex.StackTrace };
                 }
             }
             return res;
@@ -87,9 +90,9 @@ namespace StaffHubApi.Controllers
         // POST : api/member/event/add
         [Route("event/add")]
         [HttpPost]
-        public ResultBase<Member> AddEvent([FromBody]Shift item, [FromQuery]string memberEmail, [FromQuery]int activityId)
+        public ResultBase<Shift> AddEvent([FromBody]Shift item, [FromQuery]string memberEmail, [FromQuery]int activityId)
         {
-            ResultBase<Member> res = new ResultBase<Member>();
+            ResultBase<Shift> res = new ResultBase<Shift>();
 
             if (!ModelState.IsValid)
             {
@@ -100,12 +103,13 @@ namespace StaffHubApi.Controllers
             {
                 try
                 {
-                    bool result = _memberService.AddEventByMemberEmail(item, memberEmail, activityId);
+                    res.Item = _memberService.AddEventByMemberEmail(item, memberEmail, activityId);
+                    res.IsSuccess = true;
                 }
                 catch (Exception ex)
                 {
                     res.IsSuccess = false;
-                    res.Error = new Error() { Message = Resources.ServerError + " : " + ex.Message, Stack = ex.StackTrace };
+                    res.Error = new Error() { Message = Resources.ServerError + " : " + ex.InnerException, Stack = ex.StackTrace };
                 }
             }
             return res;
@@ -114,9 +118,9 @@ namespace StaffHubApi.Controllers
         // POST : api/member/event/update
         [Route("event/update")]
         [HttpPost]
-        public ResultBase<Member> UpdateEvent([FromBody]Shift item, [FromQuery]int memberId)
+        public ResultBase<Shift> UpdateEvent([FromBody]Shift item)
         {
-            ResultBase<Member> res = new ResultBase<Member>();
+            ResultBase<Shift> res = new ResultBase<Shift>();
 
             if (!ModelState.IsValid)
             {
@@ -127,12 +131,12 @@ namespace StaffHubApi.Controllers
             {
                 try
                 {
-                   // res.Item = _memberService.Update(item);
+                    res.Item = _shiftService.Update(item);
                 }
                 catch (Exception ex)
                 {
                     res.IsSuccess = false;
-                    res.Error = new Error() { Message = Resources.ServerError + " : " + ex.Message, Stack = ex.StackTrace };
+                    res.Error = new Error() { Message = Resources.ServerError + " : " + ex.InnerException, Stack = ex.StackTrace };
                 }
             }
             return res;
@@ -140,10 +144,10 @@ namespace StaffHubApi.Controllers
 
         // POST : api/member/event/delete
         [Route("event/delete")]
-        [HttpPost]
-        public ResultBase<Member> DeleteEvent([FromBody]Member item)
+        [HttpDelete]
+        public ResultBase<Shift> DeleteEvent([FromBody]Shift item)
         {
-            ResultBase<Member> res = new ResultBase<Member>();
+            ResultBase<Shift> res = new ResultBase<Shift>();
 
             if (!ModelState.IsValid)
             {
@@ -154,12 +158,12 @@ namespace StaffHubApi.Controllers
             {
                 try
                 {
-                    res.Item = _memberService.Update(item);
+                    res.IsSuccess = _shiftService.Delete(item);
                 }
                 catch (Exception ex)
                 {
                     res.IsSuccess = false;
-                    res.Error = new Error() { Message = Resources.ServerError + " : " + ex.Message, Stack = ex.StackTrace };
+                    res.Error = new Error() { Message = Resources.ServerError + " : " + ex.InnerException, Stack = ex.StackTrace };
                 }
             }
             return res;
