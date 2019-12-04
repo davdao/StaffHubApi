@@ -28,10 +28,14 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-- task: AzureRmWebAppDeployment@4
+- task: CopyFiles@2
+  displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
   inputs:
-    ConnectionType: 'AzureRM'
-    azureSubscription: 'Visual Studio Enterprise (701e5e66-c22f-4071-b94a-d79e2f0a0acc)'
-    appType: 'apiApp'
-    WebAppName: 'staff-hub-api'
-    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    SourceFolder: 'Staff-hub-api/bin/Debug/netcoreapp3.0'
+    TargetFolder: '$(build.artifactstagingdirectory)'
+    
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: drop'
+  inputs:
+    PathtoPublish: '$(build.artifactstagingdirectory)'
+  condition: succeededOrFailed()
