@@ -3,8 +3,8 @@ using StaffHubApi.Repositories.Contract;
 
 namespace StaffHubApi.Repositories.Implementation
 {
-    public class ClientRepository : BaseRepository<Client>, ICommonRepository<Client>
+    public class CategoryRepository : BaseRepository<Category>, ICommonRepository<Category>
     {
-        public ClientRepository(StaffHubContext context) : base(context) { }
+        public CategoryRepository(StaffHubContext context) : base(context) { }
     }
 }

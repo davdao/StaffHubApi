@@ -5,7 +5,7 @@ using System.Text;
 
 namespace StaffHubApi.Models.Entities
 {
-    public class Client : EntityWithId
+    public class Category : EntityWithId
     {
         public string Name { get; set; }
 

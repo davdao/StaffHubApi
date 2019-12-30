@@ -16,7 +16,7 @@ namespace StaffHubApi.Repositories.Implementation
                                join a in _context.Activity on ar.ActivityId equals a.Id
                                join m in _context.Member on ar.MemberId equals m.Id
                                join s in _context.Shift on ar.ShiftId equals s.Id
-                               join c in _context.Client on ar.ClientId equals c.Id
+                               join c in _context.Category on ar.CategoryId equals c.Id
                                where ar.ActivityId == _activityId
                                select new ActivitiesRelationship { Activity = new Activity() 
                                                                     { 
@@ -42,7 +42,7 @@ namespace StaffHubApi.Repositories.Implementation
                                                                         endDay = s.EndDate.Day,
                                                                         endMonth = s.EndDate.Month,
                                                                         endYear = s.EndDate.Year,
-                                                                        Client = new Client()
+                                                                        Category = new Category()
                                                                         {
                                                                             Name = c.Name,
                                                                             Id = c.Id,

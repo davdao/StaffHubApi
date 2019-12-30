@@ -10,27 +10,27 @@ using StaffHubApi.Utils;
 namespace StaffHubApi.Controllers
 {
     [EnableCors("StaffHub")]
-    [Route("api/client")]
+    [Route("api/category")]
     [ApiController]
-    public class ClientController : ControllerBase
+    public class CategoryController : ControllerBase
     {
-        private readonly ICommonService<Client> _clientService;
+        private readonly ICommonService<Category> _categoryService;
 
-        public ClientController(ICommonService<Client> clientService)
+        public CategoryController(ICommonService<Category> categoryService)
         {
-            _clientService = clientService;
+            _categoryService = categoryService;
         }
 
-        // GET: api/client
+        // GET: api/category
         [Route("")]
         [HttpGet]
-        public ResultBase<Client> Get()
+        public ResultBase<Category> Get()
         {
-            ResultBase<Client> res = new ResultBase<Client>();
+            ResultBase<Category> res = new ResultBase<Category>();
 
             try
             {
-                res.Data = _clientService.Get();
+                res.Data = _categoryService.Get();
             }
             catch (Exception ex)
             {
@@ -41,12 +41,12 @@ namespace StaffHubApi.Controllers
             return res;
         }
 
-        // POST : api/client
+        // POST : api/category
         [Route("")]
         [HttpPost]
-        public ResultBase<Client> Update([FromBody]Client item)
+        public ResultBase<Category> Update([FromBody]Category item)
         {
-            ResultBase<Client> res = new ResultBase<Client>();
+            ResultBase<Category> res = new ResultBase<Category>();
 
             if (!ModelState.IsValid)
             {
@@ -57,7 +57,7 @@ namespace StaffHubApi.Controllers
             {
                 try
                 {
-                    res.Item = _clientService.Update(item);
+                    res.Item = _categoryService.Update(item);
                 }
                 catch (Exception ex)
                 {
@@ -68,12 +68,12 @@ namespace StaffHubApi.Controllers
             return res;
         }
 
-        // DELETE : api/client
+        // DELETE : api/category
         [Route("")]
         [HttpDelete]
-        public ResultBase<Client> Delete([FromBody]Client item)
+        public ResultBase<Category> Delete([FromBody]Category item)
         {
-            ResultBase<Client> res = new ResultBase<Client>();
+            ResultBase<Category> res = new ResultBase<Category>();
 
             if (!ModelState.IsValid)
             {
@@ -84,7 +84,7 @@ namespace StaffHubApi.Controllers
             {
                 try
                 {
-                    if (_clientService.Delete(item))
+                    if (_categoryService.Delete(item))
                         res.Message = string.Format(Resources.ItemDeleted, item.Name);
                 }
                 catch (Exception ex)

@@ -13,7 +13,7 @@ namespace StaffHubApi.Models.Relationship
 
         public int? ShiftId { get; set; }
 
-        public int ClientId { get; set; }
+        public int CategoryId { get; set; }
 
         public Activity Activity { get; set; }
 
@@ -21,6 +21,6 @@ namespace StaffHubApi.Models.Relationship
 
         public Shift Shift { get; set; }
 
-        public Client Client { get; set; }
+        public Category Category { get; set; }
     }
 }

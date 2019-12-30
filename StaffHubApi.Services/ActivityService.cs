@@ -13,21 +13,21 @@ namespace StaffHubApi.Services
         private readonly IActivtiesMemberRelationshipRepository _activtiesMemberRelationshipRepository;
         private readonly ICommonRepository<Activity> _activityRepository;
         private readonly ICommonRepository<Member> _memberRepository;
-        private readonly ICommonRepository<Client> _clientRepository;
+        private readonly ICommonRepository<Category> _categoryRepository;
         private readonly ICommonRepository<Shift> _shiftRepository;
 
         public ActivityService(IActivitiesRelationshipRepository activitiesRelationshipRepository,
                                 IActivtiesMemberRelationshipRepository activtiesMemberRelationshipRepository,
                                 ICommonRepository<Activity> activityRepository,
                                 ICommonRepository<Member> memberRepository,
-                                ICommonRepository<Client> clientRepository,
+                                ICommonRepository<Category> categoryRepository,
                                 ICommonRepository<Shift> shiftRepository)
         {
             _activitiesRelationshipRepository = activitiesRelationshipRepository;
             _activtiesMemberRelationshipRepository = activtiesMemberRelationshipRepository;
             _activityRepository = activityRepository;
             _memberRepository = memberRepository;
-            _clientRepository = clientRepository;
+            _categoryRepository = categoryRepository;
             _shiftRepository = shiftRepository;
         }
 

@@ -10,14 +10,14 @@ using StaffHubApi.Repositories;
 namespace StaffHubApi.Repositories.Migrations
 {
     [DbContext(typeof(StaffHubContext))]
-    [Migration("20191129223633_InitiaMigration")]
-    partial class InitiaMigration
+    [Migration("20191230085115_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.0.1")
+                .HasAnnotation("ProductVersion", "3.1.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -53,7 +53,7 @@ namespace StaffHubApi.Repositories.Migrations
                         });
                 });
 
-            modelBuilder.Entity("StaffHubApi.Models.Entities.Client", b =>
+            modelBuilder.Entity("StaffHubApi.Models.Entities.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -68,7 +68,7 @@ namespace StaffHubApi.Repositories.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Client");
+                    b.ToTable("Category");
 
                     b.HasData(
                         new
@@ -223,7 +223,7 @@ namespace StaffHubApi.Repositories.Migrations
                     b.Property<int>("ActivityId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ClientId")
+                    b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<int>("MemberId")
@@ -236,7 +236,7 @@ namespace StaffHubApi.Repositories.Migrations
 
                     b.HasIndex("ActivityId");
 
-                    b.HasIndex("ClientId");
+                    b.HasIndex("CategoryId");
 
                     b.HasIndex("MemberId");
 
@@ -249,8 +249,9 @@ namespace StaffHubApi.Repositories.Migrations
                         {
                             Id = 1,
                             ActivityId = 1,
-                            ClientId = 1,
-                            MemberId = 5
+                            CategoryId = 1,
+                            MemberId = 5,
+                            ShiftId = 1
                         });
                 });
 
@@ -340,9 +341,9 @@ namespace StaffHubApi.Repositories.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("StaffHubApi.Models.Entities.Client", "Client")
+                    b.HasOne("StaffHubApi.Models.Entities.Category", "Category")
                         .WithMany()
-                        .HasForeignKey("ClientId")
+                        .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
