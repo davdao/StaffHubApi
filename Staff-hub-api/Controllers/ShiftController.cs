@@ -25,7 +25,7 @@ namespace StaffHubApi.Controllers
             return _shiftService.Get();
         }
 
-        // POST : api/client
+        // POST : api/category
         [Route("add")]
         [HttpPost]
         public ResultBase<Shift> Add([FromBody]Shift item)
@@ -52,7 +52,7 @@ namespace StaffHubApi.Controllers
             return res;
         }
 
-        // POST : api/client
+        // POST : api/category
         [Route("update")]
         [HttpPost]
         public ResultBase<Shift> Update([FromBody]Shift item)
@@ -79,7 +79,7 @@ namespace StaffHubApi.Controllers
             return res;
         }
 
-        // DELETE : api/client
+        // DELETE : api/category
         [Route("")]
         [HttpDelete]
         public ResultBase<Shift> Delete([FromBody]Shift item)

@@ -33,7 +33,7 @@ namespace StaffHubApi.Services
                                                             ActivityId = activityId, 
                                                             MemberId = memberToLink.Id, 
                                                             ShiftId = addedShift.Id,
-                                                            ClientId = addedShift.Client.Id});
+                                                            CategoryId = addedShift.Category.Id});
                 _activitiesRelationshipRepository.Save();
 
                 return addedShift;

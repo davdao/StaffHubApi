@@ -4,42 +4,42 @@ using StaffHubApi.Repositories.Contract;
 
 namespace StaffHubApi.Services
 {
-    public class ClientService : ICommonService<Client>
+    public class CategoryService : ICommonService<Category>
     {
-        private readonly ICommonRepository<Client> _clientRepository;
+        private readonly ICommonRepository<Category> _categoryRepository;
 
-        public ClientService(ICommonRepository<Client> clientRepository)
+        public CategoryService(ICommonRepository<Category> categoryRepository)
         {
-            _clientRepository = clientRepository;
+            _categoryRepository = categoryRepository;
         }
 
-        public bool Delete(Client item)
+        public bool Delete(Category item)
         {
-            return _clientRepository.Delete(item) > 0;
+            return _categoryRepository.Delete(item) > 0;
         }
 
-        public IEnumerable<Client> Get()
+        public IEnumerable<Category> Get()
         {
-            return _clientRepository.All;
+            return _categoryRepository.All;
         }
 
-        public Client GetById(int itemID)
+        public Category GetById(int itemID)
         {
             throw new System.NotImplementedException();
         }
 
-        public Client Post(Client item)
+        public Category Post(Category item)
         {
-            _clientRepository.Insert(item);
-            _clientRepository.Save();
+            _categoryRepository.Insert(item);
+            _categoryRepository.Save();
 
             return item;
         }
 
-        public Client Update(Client item)
+        public Category Update(Category item)
         {
-            _clientRepository.Update(item);
-            _clientRepository.Save();
+            _categoryRepository.Update(item);
+            _categoryRepository.Save();
 
             return item;
         }

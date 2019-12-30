@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace StaffHubApi.Repositories.Migrations
 {
-    public partial class InitiaMigration : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -22,7 +22,7 @@ namespace StaffHubApi.Repositories.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Client",
+                name: "Category",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -32,7 +32,7 @@ namespace StaffHubApi.Repositories.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Client", x => x.Id);
+                    table.PrimaryKey("PK_Category", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -100,7 +100,7 @@ namespace StaffHubApi.Repositories.Migrations
                     ActivityId = table.Column<int>(nullable: false),
                     MemberId = table.Column<int>(nullable: false),
                     ShiftId = table.Column<int>(nullable: true),
-                    ClientId = table.Column<int>(nullable: false)
+                    CategoryId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -112,9 +112,9 @@ namespace StaffHubApi.Repositories.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ActivitiesRelationship_Client_ClientId",
-                        column: x => x.ClientId,
-                        principalTable: "Client",
+                        name: "FK_ActivitiesRelationship_Category_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Category",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -141,7 +141,7 @@ namespace StaffHubApi.Repositories.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Client",
+                table: "Category",
                 columns: new[] { "Id", "Color", "Name" },
                 values: new object[,]
                 {
@@ -174,8 +174,8 @@ namespace StaffHubApi.Repositories.Migrations
 
             migrationBuilder.InsertData(
                 table: "ActivitiesRelationship",
-                columns: new[] { "Id", "ActivityId", "ClientId", "MemberId", "ShiftId" },
-                values: new object[] { 1, 1, 1, 5, null });
+                columns: new[] { "Id", "ActivityId", "CategoryId", "MemberId", "ShiftId" },
+                values: new object[] { 1, 1, 1, 5, 1 });
 
             migrationBuilder.InsertData(
                 table: "ActivityMemberRelationship",
@@ -199,9 +199,9 @@ namespace StaffHubApi.Repositories.Migrations
                 column: "ActivityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ActivitiesRelationship_ClientId",
+                name: "IX_ActivitiesRelationship_CategoryId",
                 table: "ActivitiesRelationship",
-                column: "ClientId");
+                column: "CategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ActivitiesRelationship_MemberId",
@@ -233,7 +233,7 @@ namespace StaffHubApi.Repositories.Migrations
                 name: "ActivityMemberRelationship");
 
             migrationBuilder.DropTable(
-                name: "Client");
+                name: "Category");
 
             migrationBuilder.DropTable(
                 name: "Shift");

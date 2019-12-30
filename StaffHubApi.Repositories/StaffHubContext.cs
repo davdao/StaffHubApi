@@ -13,7 +13,7 @@ namespace StaffHubApi.Repositories
         public DbSet<Activity> Activity { get; set; }
         public DbSet<Member> Member { get; set; }
         public DbSet<Shift> Shift { get; set; }
-        public DbSet<Client> Client { get; set; }
+        public DbSet<Category> Category { get; set; }
         public DbSet<ActivitiesRelationship> ActivitiesRelationship { get; set; }
         public DbSet<ActivityMemberRelationship> ActivityMemberRelationship { get; set; }
         
@@ -22,7 +22,7 @@ namespace StaffHubApi.Repositories
             modelBuilder.Entity<Member>().ToTable("Member");
             modelBuilder.Entity<Activity>().ToTable("Activity");
             modelBuilder.Entity<Shift>().ToTable("Shift");
-            modelBuilder.Entity<Client>().ToTable("Client");
+            modelBuilder.Entity<Category>().ToTable("Category");
             modelBuilder.Entity<ActivitiesRelationship>().ToTable("ActivitiesRelationship");
             modelBuilder.Entity<ActivityMemberRelationship>().ToTable("ActivityMemberRelationship");
             
@@ -41,7 +41,7 @@ namespace StaffHubApi.Repositories
                 new { Id = 9, Name = "Florez Angela", Email = "florez@infeeny.com", PictureUrl = ""}
                 );
 
-            modelBuilder.Entity<Client>().HasData(
+            modelBuilder.Entity<Category>().HasData(
                 new { Id = 1, Name = "GEM", Color = "#8D7EF3" },
                 new { Id = 2, Name = "Michelin", Color = "#A4202B" },
                 new { Id = 3, Name = "Sicam", Color = "#4D8602" },
@@ -65,7 +65,7 @@ namespace StaffHubApi.Repositories
                 );
 
             modelBuilder.Entity<ActivitiesRelationship>().HasData(
-                new ActivitiesRelationship { Id = 1, ActivityId = 1, ClientId = 1, MemberId = 5, ShiftId = 1 }
+                new ActivitiesRelationship { Id = 1, ActivityId = 1, CategoryId = 1, MemberId = 5, ShiftId = 1 }
                 );
 
             base.OnModelCreating(modelBuilder);

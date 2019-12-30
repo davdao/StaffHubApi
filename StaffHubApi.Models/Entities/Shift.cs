@@ -14,7 +14,7 @@ namespace StaffHubApi.Models.Entities
         public DateTime EndDate { get; set; }
 
         [NotMapped]
-        public Client Client { get; set; }
+        public Category Category { get; set; }
 
         [NotMapped]
         public int startDay { get; set; }

@@ -36,7 +36,7 @@ namespace StaffHubApi
             services.AddDbContext<StaffHubContext>(op => op.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<ICommonRepository<Activity>, ActivityRepository>();
-            services.AddScoped<ICommonRepository<Client>, ClientRepository>();
+            services.AddScoped<ICommonRepository<Category>, CategoryRepository>();
             services.AddScoped<ICommonRepository<Member>, MemberRepository>();
             services.AddScoped<ICommonRepository<Shift>, ShiftRepository>();
 
@@ -44,7 +44,7 @@ namespace StaffHubApi
             services.AddScoped<IActivtiesMemberRelationshipRepository, ActivityMemberRelationshipRepository>();
             
             services.AddScoped<ICommonService<Activity>, ActivityService>();
-            services.AddScoped<ICommonService<Client>, ClientService>();
+            services.AddScoped<ICommonService<Category>, CategoryService>();
             services.AddScoped<IMemberService, MemberService>();
             services.AddScoped<ICommonService<Shift>, ShiftService>();
             services.AddMvc();            
