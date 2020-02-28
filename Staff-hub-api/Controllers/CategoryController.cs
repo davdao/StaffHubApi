@@ -41,6 +41,33 @@ namespace StaffHubApi.Controllers
             return res;
         }
 
+        // POST : api/category/add
+        [Route("add")]
+        [HttpPost]
+        public ResultBase<Category> Add([FromBody]Category item)
+        {
+            ResultBase<Category> res = new ResultBase<Category>();
+
+            if (!ModelState.IsValid)
+            {
+                res.IsSuccess = false;
+                res.Error = new Error() { Message = Resources.ModelInvalid };
+            }
+            else
+            {
+                try
+                {
+                    res.Item = _categoryService.Post(item);
+                }
+                catch (Exception ex)
+                {
+                    res.IsSuccess = false;
+                    res.Error = new Error() { Message = Resources.ServerError + " : " + ex.InnerException, Stack = ex.StackTrace };
+                }
+            }
+            return res;
+        }
+
         // POST : api/category
         [Route("")]
         [HttpPost]

@@ -57,7 +57,6 @@ namespace StaffHubApi
             {
                 app.UseDeveloperExceptionPage();
             }
-
             
             app.UseHttpsRedirection();
 
